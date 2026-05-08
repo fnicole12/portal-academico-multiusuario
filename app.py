@@ -1,11 +1,13 @@
 import os
 import psycopg2
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.environ['SECRET_KEY']
 
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
@@ -34,8 +36,55 @@ def index():
         return f"Error de conexión: {e}"
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+
+        user_id = request.form['user_id']
+        password = request.form['password']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute('''
+            SELECT id, user_id, password_hash, role
+            FROM users
+            WHERE user_id = %s
+        ''', (user_id,))
+
+        user = cur.fetchone()
+
+        cur.close()
+        conn.close()
+
+        # validar pwd
+        if user and check_password_hash(user[2], password):
+            session['user_id'] = user[0]
+            session['role'] = user[3]
+
+            return redirect(url_for('dashboard'))
+
+        return 'Credenciales incorrectas'
+
+    return render_template('login.html')
 
 
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return f"""
+        Bienvenid@.
+        Tu rol es: {session['role']}
+    """
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+
+    return redirect(url_for('login'))
 
 
 
