@@ -38,7 +38,6 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     if request.method == 'POST':
 
         user_id = request.form['user_id']
@@ -60,13 +59,32 @@ def login():
 
         # validar pwd
         if user and check_password_hash(user[2], password):
-            return 'LOGIN CORRECTO'
+            session['user_id'] = user[0]
+            session['role'] = user[3]
+
+            return redirect(url_for('dashboard'))
 
         return 'Credenciales incorrectas'
 
     return render_template('login.html')
 
 
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return f"""
+        Bienvenid@.
+        Tu rol es: {session['role']}
+    """
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+
+    return redirect(url_for('login'))
 
 
 
