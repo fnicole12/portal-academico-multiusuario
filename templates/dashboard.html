@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+<h1>Bienvenid@</h1>
+
+<p>
+    Tu rol es: {{ role }}
+</p>
+
+<hr>
+
+{% if role == 'admin' %}
+
+    <h2>Panel Administrador</h2>
+
+    <a href="/nuevo-anuncio">
+        <button>
+            Nuevo anuncio
+        </button>
+    </a>
+
+    <button>
+        Editar anuncio
+    </button>
+
+{% elif role == 'profesor' %}
+
+    <h2>Panel Profesor</h2>
+
+    <button>
+        Publicar calificaciones
+    </button>
+
+{% elif role == 'alumno' %}
+
+    <h2>Panel Alumno</h2>
+
+    <p>
+        Puedes consultar tus calificaciones
+    </p>
+
+{% elif role == 'padre' %}
+
+    <h2>Panel Padre</h2>
+
+    <p>
+        Puedes consultar calificaciones y anuncios
+    </p>
+
+{% endif %}
+
+<hr>
+
+<a href="/logout">
+    Cerrar sesión
+</a>
+
+</body>
+</html>

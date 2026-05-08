@@ -69,23 +69,37 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-
-    return f"""
-        Bienvenid@.
-        Tu rol es: {session['role']}
-    """
-
-
 @app.route('/logout')
 def logout():
     session.clear()
 
     return redirect(url_for('login'))
 
+
+########################### ROLES ###########################
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return render_template(
+        'dashboard.html',
+        role=session['role']
+    )
+
+
+
+#ejemplo ruta protegida
+@app.route('/nuevo-anuncio')
+def nuevo_anuncio():
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if session['role'] != 'admin':
+        return '403 - No tienes permiso'
+
+    return 'Formulario nuevo anuncio'
 
 
 if __name__ == '__main__':
