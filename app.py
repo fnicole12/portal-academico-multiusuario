@@ -1,6 +1,7 @@
 import os
 import psycopg2
 from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -57,7 +58,11 @@ def login():
         cur.close()
         conn.close()
 
-        return str(user)
+        # validar pwd
+        if user and check_password_hash(user[2], password):
+            return 'LOGIN CORRECTO'
+
+        return 'Credenciales incorrectas'
 
     return render_template('login.html')
 

@@ -1,5 +1,9 @@
 import os
 import psycopg2
+from werkzeug.security import generate_password_hash
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conn = psycopg2.connect(
     host="localhost",
@@ -70,14 +74,15 @@ CREATE TABLE anuncios (
 
 
 # mockup data
+tmp_pass = generate_password_hash('1234')
 # usuarios
-cur.execute('''
+cur.execute(f'''
 INSERT INTO users (user_id, password_hash, role, nombre)
 VALUES
-('admin1', 'hash123', 'admin', 'Administrador'),
-('prof1', 'hash123', 'profesor', 'Profesor Uno'),
-('alum1', 'hash123', 'alumno', 'Alumno Uno'),
-('padre1', 'hash123', 'padre', 'Padre Uno');
+('admin1', '{tmp_pass}', 'admin', 'Administrador'),
+('prof1', '{tmp_pass}', 'profesor', 'Profesor Uno'),
+('alum1', '{tmp_pass}', 'alumno', 'Alumno Uno'),
+('padre1', '{tmp_pass}', 'padre', 'Padre Uno');
 ''')
 # materia
 cur.execute('''
