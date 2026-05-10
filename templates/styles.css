@@ -1,0 +1,386 @@
+/* ─────────────────────────────────────────
+   CSS Variables & Reset
+───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --clr-bg:         #eef2f9;
+  --clr-bg-card:    #ffffff;
+  --clr-orb-1:      #c9d9f5;
+  --clr-orb-2:      #dce8ff;
+  --clr-orb-3:      #b8ccf0;
+
+  --clr-brand:      #1a56db;
+  --clr-brand-dark: #1040b0;
+  --clr-brand-icon-bg: linear-gradient(140deg, #2563eb 0%, #1a40c8 100%);
+
+  --clr-text-heading: #0f1f3d;
+  --clr-text-body:    #3d4f6e;
+  --clr-text-muted:   #7b8fb0;
+  --clr-text-placeholder: #a8b8d0;
+
+  --clr-input-bg:     #f4f7fc;
+  --clr-input-border: #dde5f0;
+  --clr-input-focus:  #1a56db;
+  --clr-input-icon:   #94a8c4;
+
+  --radius-card:  20px;
+  --radius-input: 10px;
+  --radius-btn:   12px;
+  --radius-icon:  18px;
+
+  --shadow-card:  0 8px 40px rgba(26, 86, 219, 0.10), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-btn:   0 4px 18px rgba(26, 86, 219, 0.35);
+  --shadow-btn-hover: 0 8px 28px rgba(26, 86, 219, 0.45);
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────
+   Base
+───────────────────────────────────────── */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--clr-bg);
+  color: var(--clr-text-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────
+   Ambient background orbs
+───────────────────────────────────────── */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(72px);
+  pointer-events: none;
+  z-index: 0;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+.bg-orb--1 {
+  width: 520px;
+  height: 520px;
+  background: var(--clr-orb-1);
+  top: -140px;
+  left: -140px;
+  opacity: 0.65;
+  animation-duration: 14s;
+}
+
+.bg-orb--2 {
+  width: 380px;
+  height: 380px;
+  background: var(--clr-orb-2);
+  bottom: -100px;
+  right: -80px;
+  opacity: 0.55;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+.bg-orb--3 {
+  width: 260px;
+  height: 260px;
+  background: var(--clr-orb-3);
+  top: 55%;
+  left: 8%;
+  opacity: 0.35;
+  animation-duration: 16s;
+  animation-delay: -8s;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(24px, 18px) scale(1.04); }
+}
+
+/* ─────────────────────────────────────────
+   Page layout
+───────────────────────────────────────── */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  padding: 24px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  animation: pageIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────
+   Brand header
+───────────────────────────────────────── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  animation: pageIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+.brand__icon {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-icon);
+  background: var(--clr-brand-icon-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(26, 86, 219, 0.36);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.brand__icon:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(26, 86, 219, 0.45);
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--clr-text-heading);
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.brand__tagline {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--clr-text-muted);
+  letter-spacing: 0.01em;
+}
+
+/* ─────────────────────────────────────────
+   Login card
+───────────────────────────────────────── */
+.card {
+  width: 100%;
+  background: var(--clr-bg-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(220, 232, 255, 0.7);
+  overflow: hidden;
+  animation: pageIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.card__inner {
+  padding: 40px 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--clr-text-heading);
+  letter-spacing: -0.2px;
+}
+
+.card__subtitle {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--clr-text-muted);
+}
+
+/* ─────────────────────────────────────────
+   Form
+───────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─────────────────────────────────────────
+   Field
+───────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field__label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--clr-text-heading);
+  letter-spacing: 0.02em;
+}
+
+.field__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field__icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--clr-input-icon);
+  pointer-events: none;
+  transition: color var(--transition);
+}
+
+.field__input {
+  width: 100%;
+  height: 48px;
+  background: var(--clr-input-bg);
+  border: 1.5px solid var(--clr-input-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--clr-text-heading);
+  padding: 0 44px 0 42px;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.field__input::placeholder {
+  color: var(--clr-text-placeholder);
+  font-weight: 300;
+}
+
+.field__input:focus {
+  border-color: var(--clr-input-focus);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.10);
+}
+
+.field__input:focus ~ .field__icon,
+.field__wrapper:focus-within .field__icon {
+  color: var(--clr-brand);
+}
+
+.field__toggle {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-input-icon);
+  border-radius: 6px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.field__toggle:hover {
+  color: var(--clr-brand);
+  background: rgba(26, 86, 219, 0.06);
+}
+
+/* ─────────────────────────────────────────
+   Submit button
+───────────────────────────────────────── */
+.btn-submit {
+  width: 100%;
+  height: 52px;
+  background: var(--clr-text-heading);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 31, 61, 0.22);
+  transition:
+    background var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.btn-submit:hover {
+  background: #1a2f56;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15, 31, 61, 0.30);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(15, 31, 61, 0.20);
+}
+
+.btn-submit__icon {
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition);
+}
+
+.btn-submit:hover .btn-submit__icon {
+  transform: translateX(3px);
+}
+
+/* ─────────────────────────────────────────
+   Responsive
+───────────────────────────────────────── */
+@media (max-width: 520px) {
+  .card__inner {
+    padding: 32px 24px 32px;
+  }
+
+  .brand__name {
+    font-size: 1.7rem;
+  }
+}
