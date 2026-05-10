@@ -1,65 +1,171 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
-    <title>Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colegio San Martín — Panel de Administración</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
-
 <body>
 
-<h1>Bienvenid@</h1>
+  <!-- ── Navbar ── -->
+  <header class="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3L4 10V22L16 29L28 22V10L16 3Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M16 3V29" stroke="white" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <path d="M4 10L28 22" stroke="white" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <path d="M28 10L4 22" stroke="white" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <circle cx="16" cy="16" r="3.5" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="navbar__brand-text">
+        <span class="navbar__name">Colegio San Martín</span>
+        <span class="navbar__sub">Portal de Comunicación</span>
+      </div>
+    </div>
 
-<p>
-    Tu rol es: {{ role }}
-</p>
+    <nav class="navbar__nav" aria-label="Navegación principal">
+      <a href="#" class="nav-btn nav-btn--ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Vista Padres
+      </a>
+      <a href="#" class="nav-btn nav-btn--active" aria-current="page">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Administración
+      </a>
+      <a href="#" class="nav-btn nav-btn--ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Calificaciones
+      </a>
+      <a href="/login" class="nav-btn nav-btn--ghost nav-btn--logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Cerrar Sesión
+      </a>
+    </nav>
+  </header>
 
-<hr>
+  <!-- ── Main content ── -->
+  <main class="main">
+    <div class="container">
 
-{% if role == 'admin' %}
-
-    <h2>Panel Administrador</h2>
-
-    <a href="/nuevo-anuncio">
-        <button>
-            Nuevo anuncio
+      <!-- Page header -->
+      <div class="page-header">
+        <div class="page-header__text">
+          <h1 class="page-header__title">Panel de Administración</h1>
+          <p class="page-header__subtitle">Gestiona los avisos y comunicados del colegio</p>
+        </div>
+        <button class="btn-new" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Nuevo Aviso
         </button>
-    </a>
+      </div>
 
-    <button>
-        Editar anuncio
-    </button>
+      <!-- Notices section -->
+      <section class="notices">
+        <h2 class="notices__heading">Avisos Publicados</h2>
 
-{% elif role == 'profesor' %}
+        <div class="notices__list">
 
-    <h2>Panel Profesor</h2>
+          <!-- Notice 1 -->
+          <article class="notice-card">
+            <div class="notice-card__meta">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <time datetime="2026-02-24">24 de febrero, 2026</time>
+            </div>
+            <h3 class="notice-card__title">Reunión de Padres - Marzo 2026</h3>
+            <div class="notice-card__divider"></div>
+            <p class="notice-card__body">
+              Estimadas familias, les informamos que el próximo viernes 5 de marzo a las 18:00 horas se llevará a cabo la reunión trimestral de padres. Trataremos temas importantes sobre el rendimiento académico y actividades del segundo trimestre. Les esperamos.
+            </p>
+            <div class="notice-card__actions">
+              <button class="action-btn action-btn--edit" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Editar
+              </button>
+              <button class="action-btn action-btn--delete" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Eliminar
+              </button>
+            </div>
+          </article>
 
-    <button>
-        Publicar calificaciones
-    </button>
+          <!-- Notice 2 -->
+          <article class="notice-card">
+            <div class="notice-card__meta">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <time datetime="2026-02-26">26 de febrero, 2026</time>
+            </div>
+            <h3 class="notice-card__title">Cambio de Horario - Clase de Educación Física</h3>
+            <div class="notice-card__divider"></div>
+            <p class="notice-card__body">
+              Debido a trabajos de mantenimiento en el gimnasio principal, las clases de educación física de 3° y 4° grado se trasladarán temporalmente al campo deportivo externo. El horario permanece igual, solo cambia la ubicación. Esto aplicará desde el lunes 1 de marzo hasta el viernes 12 de marzo.
+            </p>
+            <div class="notice-card__actions">
+              <button class="action-btn action-btn--edit" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Editar
+              </button>
+              <button class="action-btn action-btn--delete" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Eliminar
+              </button>
+            </div>
+          </article>
 
-{% elif role == 'alumno' %}
+        </div>
+      </section>
+    </div>
+  </main>
 
-    <h2>Panel Alumno</h2>
+  <!-- ── Modal: Nuevo Aviso ── -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title" id="modalTitle">Nuevo Aviso</h3>
+        <button class="modal__close" type="button" id="modalClose" aria-label="Cerrar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="modal-field">
+          <label class="modal-field__label" for="noticeTitle">Título</label>
+          <input class="modal-field__input" type="text" id="noticeTitle" placeholder="Título del aviso" />
+        </div>
+        <div class="modal-field">
+          <label class="modal-field__label" for="noticeDate">Fecha</label>
+          <input class="modal-field__input" type="date" id="noticeDate" />
+        </div>
+        <div class="modal-field">
+          <label class="modal-field__label" for="noticeBody">Contenido</label>
+          <textarea class="modal-field__input modal-field__textarea" id="noticeBody" placeholder="Escribe el contenido del aviso…" rows="5"></textarea>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="modal-btn modal-btn--cancel" type="button" id="modalCancel">Cancelar</button>
+        <button class="modal-btn modal-btn--submit" type="button">Publicar Aviso</button>
+      </div>
+    </div>
+  </div>
 
-    <p>
-        Puedes consultar tus calificaciones
-    </p>
+  <script>
+    const overlay   = document.getElementById('modalOverlay');
+    const btnNew    = document.querySelector('.btn-new');
+    const btnClose  = document.getElementById('modalClose');
+    const btnCancel = document.getElementById('modalCancel');
 
-{% elif role == 'padre' %}
+    function openModal()  { overlay.classList.add('is-open'); }
+    function closeModal() { overlay.classList.remove('is-open'); }
 
-    <h2>Panel Padre</h2>
-
-    <p>
-        Puedes consultar calificaciones y anuncios
-    </p>
-
-{% endif %}
-
-<hr>
-
-<a href="/logout">
-    Cerrar sesión
-</a>
-
+    btnNew.addEventListener('click', openModal);
+    btnClose.addEventListener('click', closeModal);
+    btnCancel.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
 </body>
 </html>

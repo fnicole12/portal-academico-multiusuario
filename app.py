@@ -36,7 +36,7 @@ def index():
         return f"Error de conexión: {e}"
 
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
 
