@@ -19,21 +19,11 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
 
-        # prueba simple
-        cur.execute('SELECT 1;')
-        result = cur.fetchone()
+    if 'user_id' in session:
+        return redirect(url_for('dashboard'))
 
-        cur.close()
-        conn.close()
-
-        return f"Conexión exitosa: {result}"
-
-    except Exception as e:
-        return f"Error de conexión: {e}"
+    return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
