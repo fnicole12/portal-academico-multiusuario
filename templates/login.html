@@ -93,6 +93,11 @@
             </button>
           </div>
         </form>
+        {% if error %}
+          <script>
+            alert("{{ error }}");
+          </script>
+        {% endif %}
       </div>
     </section>
 

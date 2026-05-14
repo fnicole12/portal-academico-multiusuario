@@ -54,7 +54,10 @@ def login():
 
             return redirect(url_for('dashboard'))
 
-        return 'Credenciales incorrectas'
+        return render_template(
+            'login.html',
+            error='Usuario o contraseña incorrecta'
+        )
 
     return render_template('login.html')
 
